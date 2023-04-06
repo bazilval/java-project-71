@@ -1,6 +1,9 @@
 plugins {
     id 'java'
     id 'application'
+    id 'checkstyle'
+    id 'jacoco'
+    id 'com.adarshr.test-logger' version '3.2.0'
 }
 
 group 'hexlet.code'
@@ -17,14 +20,26 @@ dependencies {
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.0'
 }
 
-test {
-    useJUnitPlatform()
-}
-
 application {
     mainClass = 'hexlet.code.App'
 }
 
 compileJava {
     options.release = 17
+}
+
+test {
+    useJUnitPlatform()
+    finalizedBy jacocoTestReport
+}
+
+testlogger {
+    showStandardStreams true
+}
+
+jacocoTestReport {
+    dependsOn test
+    reports {
+        xml.required = true
+    }
 }

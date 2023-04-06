@@ -21,7 +21,7 @@ public class App implements Callable {
         System.exit(exitCode);
     }
     @Override
-    public Object call() throws Exception {
+    public Integer call() throws Exception {
         System.out.println(Differ.generate(filepath1, filepath2));
         return 0;
     }
