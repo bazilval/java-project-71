@@ -1,41 +1,14 @@
 package hexlet.code;
 
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.stream.Collectors;
-
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class Differ {
     public static String generate(String filepath1, String filepath2) throws Exception {
-        var data1 = getData(filepath1);
-        var data2 = getData(filepath2);
-        String diff = getDiff(data1, data2);
-        return diff;
+        var data1 = Parser.getData(filepath1);
+        var data2 = Parser.getData(filepath2);
+        return getDiff(data1, data2);
     }
-    private static Map<String, Object> getData(String filepath) throws Exception {
-        Path path = Paths.get(filepath);
-        String content = Files.readString(path);
 
-        return parse(content);
-    }
-    private static Map<String, Object> parse(String content) throws JsonProcessingException {
-        ObjectMapper objectMapper = new ObjectMapper();
-        var data = objectMapper.readValue(content, new TypeReference<Map<String, Object>>() { });
-        var sortedData = data.entrySet().stream()
-                .sorted(Map.Entry.comparingByKey())
-                .collect(Collectors.toMap(Map.Entry::getKey,
-                                          Map.Entry::getValue,
-                                          (oldValue, newValue) -> oldValue,
-                                          LinkedHashMap::new));
-        sortedData.put(null, "endPoint");
-        return sortedData;
-    }
     private static String getDiff(Map<String, Object> data1, Map<String, Object> data2) {
         StringBuilder builder = new StringBuilder("{\n");
         var iterator1 = data1.entrySet().iterator();
