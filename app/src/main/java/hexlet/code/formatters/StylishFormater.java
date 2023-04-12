@@ -1,14 +1,18 @@
-package hexlet.code;
+package hexlet.code.formatters;
+
+import hexlet.code.DiffRecord;
 
 import java.util.List;
 public class StylishFormater implements Formater {
     @Override
     public String format(List<DiffRecord> diff) {
-        StringBuilder builder = new StringBuilder("{\n");
+        String beginning = "{\n";
+        String ending = "}";
+        StringBuilder builder = new StringBuilder(beginning);
         for (var record : diff) {
             builder.append(getLine(record));
         }
-        return builder.toString() + "}";
+        return builder + ending;
     }
 
     private String getLine(DiffRecord record) {

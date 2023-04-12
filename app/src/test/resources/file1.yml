@@ -14,7 +14,7 @@ numbers2:
   - 4
   - 5
 id: 45
-default:
+default: null
 checked: false
 numbers3:
   - 3

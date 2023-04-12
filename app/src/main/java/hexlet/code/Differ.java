@@ -1,5 +1,7 @@
 package hexlet.code;
 
+import hexlet.code.formatters.Formater;
+
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -9,7 +11,7 @@ public class Differ {
         return generate(filepath1, filepath2, "stylish");
     }
     public static String generate(String filepath1, String filepath2, String format) throws Exception {
-        Formater formater = FormaterFactory.create(format);
+        Formater formater = Formater.create(format);
 
         var data1 = Parser.getData(filepath1);
         var data2 = Parser.getData(filepath2);
