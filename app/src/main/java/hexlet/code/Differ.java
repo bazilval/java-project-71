@@ -1,19 +1,28 @@
 package hexlet.code;
 
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 public class Differ {
     public static String generate(String filepath1, String filepath2) throws Exception {
+        return generate(filepath1, filepath2, "stylish");
+    }
+    public static String generate(String filepath1, String filepath2, String format) throws Exception {
+        Formater formater = FormaterFactory.create(format);
+
         var data1 = Parser.getData(filepath1);
         var data2 = Parser.getData(filepath2);
-        return getDiff(data1, data2);
-    }
+        var diff = getDiff(data1, data2);
 
-    private static String getDiff(Map<String, Object> data1, Map<String, Object> data2) {
-        StringBuilder builder = new StringBuilder("{\n");
+        return formater.format(diff);
+    }
+    private static List<DiffRecord> getDiff(Map<String, Object> data1, Map<String, Object> data2) {
+        var records = new LinkedList<DiffRecord>();
         var iterator1 = data1.entrySet().iterator();
         var iterator2 = data2.entrySet().iterator();
         boolean hasStep = iterator1.hasNext() || iterator2.hasNext();
+
         Map.Entry<String, Object> entry1 = iterator1.next();
         Map.Entry<String, Object> entry2 = iterator2.next();
 
@@ -23,34 +32,35 @@ public class Differ {
             String key2 = entry2.getKey();
             Object value1 = entry1.getValue();
             Object value2 = entry2.getValue();
-            String line = "";
-            int compareIndex;
-
-            if (key1 == null) {
-                compareIndex = 1;
-            } else if (key2 == null) {
-                compareIndex = -1;
-            } else {
-                compareIndex = key1.compareTo(key2);
-            }
+            DiffRecord record = null;
+            int compareIndex = compareKeys(key1, key2);
 
             if (compareIndex == 0) {
-                if (value1.equals(value2)) {
-                    line = String.format("    %s: %s\n", key1, value1);
-                } else {
-                    line = String.format("  - %s: %s\n  + %s: %s\n", key1, value1, key2, value2);
-                }
+                record = DiffRecord.create(key1, value1, value2);
                 entry1 = iterator1.hasNext() ? iterator1.next() : entry1;
                 entry2 = iterator2.hasNext() ? iterator2.next() : entry2;
             } else if (key1 != null && compareIndex < 0) {
-                line = String.format("  - %s: %s\n", key1, value1);
+                record = DiffRecord.createDeleted(key1, value1);
                 entry1 = iterator1.hasNext() ? iterator1.next() : entry1;
             } else if (key2 != null) {
-                line = String.format("  + %s: %s\n", key2, value2);
+                record = DiffRecord.createNew(key2, value2);
                 entry2 = iterator2.hasNext() ? iterator2.next() : entry2;
             }
-            builder.append(line);
+            if (record != null) {
+                records.add(record);
+            }
         }
-        return builder.append("}").toString();
+        return records;
+    }
+    private static int compareKeys(String key1, String key2) {
+        int compareIndex;
+        if (key1 == null) {
+            compareIndex = 1;
+        } else if (key2 == null) {
+            compareIndex = -1;
+        } else {
+            compareIndex = key1.compareTo(key2);
+        }
+        return compareIndex;
     }
 }

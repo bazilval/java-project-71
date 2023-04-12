@@ -41,7 +41,7 @@ public class Parser {
             sortedData = data.entrySet().stream()
                     .sorted(Map.Entry.comparingByKey())
                     .collect(Collectors.toMap(Map.Entry::getKey,
-                            Map.Entry::getValue,
+                            e -> e.getValue() != null ? e.getValue() : "null",
                             (oldValue, newValue) -> oldValue,
                             LinkedHashMap::new));
         }
