@@ -3,7 +3,7 @@ package hexlet.code.formatters;
 import hexlet.code.DiffRecord;
 
 import java.util.List;
-public class StylishFormater implements Formater {
+public final class StylishFormater implements Formater {
     @Override
     public String format(List<DiffRecord> diff) {
         String beginning = "{\n";
@@ -24,10 +24,10 @@ public class StylishFormater implements Formater {
             case SAME -> {
                 return String.format("    %s: %s\n", key, oldValue);
             }
-            case NEW -> {
+            case ADDED -> {
                 return String.format("  + %s: %s\n", key, newValue);
             }
-            case DELETED -> {
+            case REMOVED -> {
                 return String.format("  - %s: %s\n", key, oldValue);
             }
             case UPDATED -> {

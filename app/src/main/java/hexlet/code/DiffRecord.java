@@ -1,9 +1,9 @@
 package hexlet.code;
 
-public class DiffRecord {
+public final class DiffRecord {
     public enum State {
-        DELETED,
-        NEW,
+        REMOVED,
+        ADDED,
         SAME,
         UPDATED
     }
@@ -19,14 +19,14 @@ public class DiffRecord {
             return createUpdated(key, oldValue, newValue);
         }
     }
-    public static DiffRecord createDeleted(String key, Object oldValue) {
-        return new DiffRecord(key, oldValue, null, State.DELETED);
+    public static DiffRecord createRemoved(String key, Object oldValue) {
+        return new DiffRecord(key, oldValue, null, State.REMOVED);
     }
     public static DiffRecord createUpdated(String key, Object oldValue, Object newValue) {
         return new DiffRecord(key, oldValue, newValue, State.UPDATED);
     }
-    public static DiffRecord createNew(String key, Object newValue) {
-        return new DiffRecord(key, null, newValue, State.NEW);
+    public static DiffRecord createAdded(String key, Object newValue) {
+        return new DiffRecord(key, null, newValue, State.ADDED);
     }
     public static DiffRecord createSame(String key, Object oldValue) {
         return new DiffRecord(key, oldValue, null, State.SAME);

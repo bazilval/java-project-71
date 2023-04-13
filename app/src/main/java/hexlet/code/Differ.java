@@ -6,7 +6,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-public class Differ {
+public final class Differ {
     public static String generate(String filepath1, String filepath2) throws Exception {
         return generate(filepath1, filepath2, "stylish");
     }
@@ -42,10 +42,10 @@ public class Differ {
                 entry1 = iterator1.hasNext() ? iterator1.next() : entry1;
                 entry2 = iterator2.hasNext() ? iterator2.next() : entry2;
             } else if (key1 != null && compareIndex < 0) {
-                record = DiffRecord.createDeleted(key1, value1);
+                record = DiffRecord.createRemoved(key1, value1);
                 entry1 = iterator1.hasNext() ? iterator1.next() : entry1;
             } else if (key2 != null) {
-                record = DiffRecord.createNew(key2, value2);
+                record = DiffRecord.createAdded(key2, value2);
                 entry2 = iterator2.hasNext() ? iterator2.next() : entry2;
             }
             if (record != null) {

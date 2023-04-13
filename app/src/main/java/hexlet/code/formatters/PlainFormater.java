@@ -5,7 +5,7 @@ import hexlet.code.DiffRecord;
 import java.util.List;
 import java.util.Map;
 
-public class PlainFormater implements Formater {
+public final class PlainFormater implements Formater {
     @Override
     public String format(List<DiffRecord> diff) {
         StringBuilder builder = new StringBuilder();
@@ -23,10 +23,10 @@ public class PlainFormater implements Formater {
             case SAME -> {
                 return "";
             }
-            case NEW -> {
+            case ADDED -> {
                 return String.format("Property '%s' was added with value: %s\n", key, newValue);
             }
-            case DELETED -> {
+            case REMOVED -> {
                 return String.format("Property '%s' was removed\n", key);
             }
             case UPDATED -> {
