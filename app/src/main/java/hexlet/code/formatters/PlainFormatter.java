@@ -5,7 +5,7 @@ import hexlet.code.DiffRecord;
 import java.util.List;
 import java.util.Map;
 
-public final class PlainFormater implements Formater {
+public final class PlainFormatter implements Formatter {
     @Override
     public String format(List<DiffRecord> diff) {
         StringBuilder builder = new StringBuilder();
@@ -45,8 +45,8 @@ public final class PlainFormater implements Formater {
         if (isComplex) {
             return "[complex value]";
         }
-        if (value instanceof String && value != "null") {
-            return "'" + value.toString() + "'";
+        if (value instanceof String) {
+            return "'" + value + "'";
         }
         return value.toString();
     }

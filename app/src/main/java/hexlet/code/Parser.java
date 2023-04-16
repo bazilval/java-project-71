@@ -5,47 +5,32 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLMapper;
 
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.LinkedHashMap;
+
+import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class Parser {
-    enum Extension {
-        JSON,
-        YAML
-    }
-    public static Map<String, Object> getData(String filepath) throws Exception {
-        Path path = Paths.get(filepath);
-        String content = Files.readString(path);
-        Extension extension = filepath.endsWith(".yml") ? Extension.YAML : Extension.JSON;
-
-        return parse(content, extension);
-    }
-    private static Map<String, Object> parse(String content, Extension extension) throws Exception {
+    public static Map<String, Optional> parse(String content, String extension) throws Exception {
         ObjectMapper objectMapper;
 
-        if (extension == Extension.YAML) {
+        if (extension.equals("YAML")) {
             objectMapper = new YAMLMapper();
         } else {
             objectMapper = new JsonMapper();
         }
-        var data = objectMapper.readValue(content, new TypeReference<Map<String, Object>>() { });
+        var data = objectMapper.readValue(content, new TypeReference<Map<String, Object>>() {
+        });
 
-        Map<String, Object> sortedData;
         if (data == null) {
-            sortedData =  new LinkedHashMap<>() { };
+            return new HashMap<>();
         } else {
-            sortedData = data.entrySet().stream()
-                    .sorted(Map.Entry.comparingByKey())
+            return data.entrySet().stream()
                     .collect(Collectors.toMap(Map.Entry::getKey,
-                            e -> e.getValue() != null ? e.getValue() : "null",
+                            e -> Optional.ofNullable(e.getValue()),
                             (oldValue, newValue) -> oldValue,
-                            LinkedHashMap::new));
+                            HashMap::new));
         }
-        sortedData.put(null, "endPoint");
-        return sortedData;
     }
 }

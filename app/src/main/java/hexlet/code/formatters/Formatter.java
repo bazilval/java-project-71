@@ -5,16 +5,15 @@ import hexlet.code.DiffRecord;
 
 import java.util.List;
 
-public interface Formater {
+public interface Formatter {
     String format(List<DiffRecord> diff) throws JsonProcessingException;
-
-    static Formater create(String format) {
+    static String format(List<DiffRecord> diffList, String format) throws JsonProcessingException {
         if (format.equals("plain")) {
-            return new PlainFormater();
+            return new PlainFormatter().format(diffList);
         } else if (format.equals("json")) {
-            return new JsonFormater();
+            return new JsonFormatter().format(diffList);
         } else {
-            return new StylishFormater();
+            return new StylishFormatter().format(diffList);
         }
     }
 }

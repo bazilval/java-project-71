@@ -3,7 +3,7 @@ package hexlet.code.formatters;
 import hexlet.code.DiffRecord;
 
 import java.util.List;
-public final class StylishFormater implements Formater {
+public final class StylishFormatter implements Formatter {
     @Override
     public String format(List<DiffRecord> diff) {
         String beginning = "{\n";
@@ -14,7 +14,6 @@ public final class StylishFormater implements Formater {
         }
         return builder + ending;
     }
-
     private String getLine(DiffRecord record) {
         var key = record.getKey();
         var oldValue = record.getOldValue();

@@ -1,5 +1,7 @@
 package hexlet.code;
 
+import java.util.Optional;
+
 public final class DiffRecord {
     public enum State {
         REMOVED,
@@ -12,29 +14,29 @@ public final class DiffRecord {
     private final Object newValue;
     private final State state;
 
-    public static DiffRecord create(String key, Object oldValue, Object newValue) {
+    public static DiffRecord create(String key, Optional oldValue, Optional newValue) {
         if (oldValue.equals(newValue)) {
             return createSame(key, oldValue);
         } else {
             return createUpdated(key, oldValue, newValue);
         }
     }
-    public static DiffRecord createRemoved(String key, Object oldValue) {
-        return new DiffRecord(key, oldValue, null, State.REMOVED);
+    public static DiffRecord createRemoved(String key, Optional oldValue) {
+        return new DiffRecord(key, oldValue, Optional.ofNullable(null), State.REMOVED);
     }
-    public static DiffRecord createUpdated(String key, Object oldValue, Object newValue) {
+    public static DiffRecord createUpdated(String key, Optional oldValue, Optional newValue) {
         return new DiffRecord(key, oldValue, newValue, State.UPDATED);
     }
-    public static DiffRecord createAdded(String key, Object newValue) {
-        return new DiffRecord(key, null, newValue, State.ADDED);
+    public static DiffRecord createAdded(String key, Optional newValue) {
+        return new DiffRecord(key, Optional.ofNullable(null), newValue, State.ADDED);
     }
-    public static DiffRecord createSame(String key, Object oldValue) {
-        return new DiffRecord(key, oldValue, null, State.SAME);
+    public static DiffRecord createSame(String key, Optional oldValue) {
+        return new DiffRecord(key, oldValue, Optional.ofNullable(null), State.SAME);
     }
-    public DiffRecord(String key, Object oldValue, Object newValue, State state) {
+    public DiffRecord(String key, Optional oldValue, Optional newValue, State state) {
         this.key = key;
-        this.oldValue = oldValue;
-        this.newValue = newValue;
+        this.oldValue = oldValue.orElse(null);
+        this.newValue = newValue.orElse(null);
         this.state = state;
     }
     public String getKey() {
