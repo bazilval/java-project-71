@@ -22,6 +22,7 @@ public final class Differ {
         return Files.readString(path);
     }
     public static String getExtension(String filepath) {
-        return filepath.endsWith(".yml") ? "YAML" : "JSON";
+        var split = filepath.split("\\.");
+        return split[split.length - 1];
     }
 }

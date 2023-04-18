@@ -14,13 +14,6 @@ public final class DiffRecord {
     private final Object newValue;
     private final State state;
 
-    public static DiffRecord create(String key, Optional oldValue, Optional newValue) {
-        if (oldValue.equals(newValue)) {
-            return createSame(key, oldValue);
-        } else {
-            return createUpdated(key, oldValue, newValue);
-        }
-    }
     public static DiffRecord createRemoved(String key, Optional oldValue) {
         return new DiffRecord(key, oldValue, Optional.ofNullable(null), State.REMOVED);
     }

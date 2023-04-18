@@ -1,0 +1,46 @@
+[ {
+  "key" : "checked",
+  "oldValue" : false,
+  "newValue" : null,
+  "state" : "REMOVED"
+}, {
+  "key" : "default",
+  "oldValue" : null,
+  "newValue" : null,
+  "state" : "REMOVED"
+}, {
+  "key" : "id",
+  "oldValue" : 45,
+  "newValue" : null,
+  "state" : "REMOVED"
+}, {
+  "key" : "key1",
+  "oldValue" : "value1",
+  "newValue" : null,
+  "state" : "REMOVED"
+}, {
+  "key" : "numbers1",
+  "oldValue" : [ 1, 2, 3, 4 ],
+  "newValue" : null,
+  "state" : "REMOVED"
+}, {
+  "key" : "numbers3",
+  "oldValue" : [ 3, 4, 5 ],
+  "newValue" : null,
+  "state" : "REMOVED"
+}, {
+  "key" : "setting1",
+  "oldValue" : "Some value",
+  "newValue" : null,
+  "state" : "REMOVED"
+}, {
+  "key" : "setting2",
+  "oldValue" : 200,
+  "newValue" : null,
+  "state" : "REMOVED"
+}, {
+  "key" : "setting3",
+  "oldValue" : true,
+  "newValue" : null,
+  "state" : "REMOVED"
+} ]

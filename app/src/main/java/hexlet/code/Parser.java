@@ -15,7 +15,7 @@ public class Parser {
     public static Map<String, Optional> parse(String content, String extension) throws Exception {
         ObjectMapper objectMapper;
 
-        if (extension.equals("YAML")) {
+        if (extension.equalsIgnoreCase("yml")) {
             objectMapper = new YAMLMapper();
         } else {
             objectMapper = new JsonMapper();

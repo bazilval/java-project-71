@@ -21,7 +21,11 @@ public class DiffBuilder {
         for (var key : sortedKeySet) {
             DiffRecord record;
             if (data1.containsKey(key) && data2.containsKey(key)) {
-                record = DiffRecord.create(key, data1.get(key), data2.get(key));
+                if (data1.get(key).equals(data2.get(key))) {
+                    record = DiffRecord.createSame(key, data1.get(key));
+                } else {
+                    record = DiffRecord.createUpdated(key, data1.get(key), data2.get(key));
+                }
             } else if (data1.containsKey(key)) {
                 record = DiffRecord.createRemoved(key, data1.get(key));
             } else {
